@@ -1,0 +1,52 @@
+---
+# tasks file for common
+- name: Enabling cgroup options at boot
+  copy:
+    src: cmdline.txt
+    dest: /boot/cmdline.txt
+    owner: root
+    group: root
+    mode: 0755
+  register: cmdline
+  tags:
+    - boot
+
+- name: Pass bridged IPv4 traffic to iptables' chains
+  sysctl:
+    name: net.bridge.bridge-nf-call-iptables
+    value: 1
+    state: present
+
+- name: apt-get update
+  apt:
+    update_cache=yes
+    autoclean=yes
+    autoremove=yes
+    cache_valid_time=86400
+
+- name: apt-get upgrade
+  apt:
+    upgrade=full
+
+- name: Reboot
+  shell: sleep 2 && shutdown -r now "Ansible Reboot for /boot/cmdline.txt Change"
+  async: 1
+  poll: 0
+  ignore_errors: True
+  when: cmdline|changed
+  tags:
+    - boot
+    - shutdown
+
+- name: Wait for Reboot
+  local_action: wait_for
+  args:
+    host: "{{ inventory_hostname }}"
+    port: 22
+    delay: 15
+    timeout: 90
+  become: False
+  when: cmdline|changed
+  tags:
+    - boot
+    - shutdown

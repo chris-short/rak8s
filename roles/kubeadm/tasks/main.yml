@@ -1,0 +1,50 @@
+---
+# tasks file for kubeadm
+
+# https://gist.github.com/alexellis/fdbc90de7691a1b9edb545c17da2d975
+- name: Disable Swap
+  shell: dphys-swapfile swapoff && dphys-swapfile uninstall && update-rc.d dphys-swapfile remove
+
+# Docker Convenience Script Can Only Be Run Once
+- name: Determine if docker is installed
+  stat:
+    path: /usr/bin/docker
+  register: docker_there
+  ignore_errors: True
+
+# https://docs.docker.com/engine/installation/linux/docker-ce/debian/#install-using-the-convenience-script
+- name: Run Docker Install Script
+  script: files/get-docker.sh
+  when: docker_there.stat.exists == False
+
+# https://kubernetes.io/docs/setup/independent/install-kubeadm/
+- name: Install apt-transport-https
+  apt:
+    name: apt-transport-https
+    state: latest
+
+- name: Add Google Cloud Repo Key
+  shell: curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
+
+- name: Add Kubernetes to Available apt Sources
+  template:
+    src: kubernetes.list
+    dest: /etc/apt/sources.list.d/kubernetes.list
+    owner: root
+    group: root
+    mode: 0644
+
+- name: apt-get update
+  apt:
+    update_cache: yes
+    autoclean: yes
+    autoremove: yes
+
+- name: Install k8s Y'all
+  apt:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - kubelet
+    - kubeadm
+    - kubectl

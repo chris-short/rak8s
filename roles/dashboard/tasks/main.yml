@@ -1,0 +1,13 @@
+---
+# tasks file for dashboard
+- name: Install k8s Dashboard
+  shell: kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard-arm.yaml
+
+- name: Configure Dashboard Access
+  shell: kubectl apply -f https://raw.githubusercontent.com/chris-short/pik8s/master/roles/dashboard/files/dashboard-admin.yaml
+
+- name: Fetch kubeconfig file
+  fetch:
+    src: /root/.kube/config
+    dest: ~/.kube/config
+    flat: yes
