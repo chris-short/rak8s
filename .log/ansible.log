@@ -1,0 +1,63 @@
+2018-01-12 20:41:13,930 p=11818 u=cshort |  - dashboard was created successfully
+2018-01-12 20:55:37,360 p=12488 u=cshort |  PLAY [master] ******************************************************************************************************************************************
+2018-01-12 20:55:37,594 p=12488 u=cshort |  TASK [Gathering Facts] *********************************************************************************************************************************
+2018-01-12 20:55:38,275 p=12488 u=cshort |  fatal: [pik8s000]: UNREACHABLE! => {"changed": false, "msg": "SSH Error: data could not be sent to remote host \"192.168.86.200\". Make sure this host can be reached over ssh", "unreachable": true}
+2018-01-12 20:55:38,277 p=12488 u=cshort |  PLAY RECAP *********************************************************************************************************************************************
+2018-01-12 20:55:38,277 p=12488 u=cshort |  pik8s000                   : ok=0    changed=0    unreachable=1    failed=0   
+2018-01-12 20:56:12,647 p=12499 u=cshort |  PLAY [master] ******************************************************************************************************************************************
+2018-01-12 20:56:12,679 p=12499 u=cshort |  TASK [Gathering Facts] *********************************************************************************************************************************
+2018-01-12 20:56:16,837 p=12499 u=cshort |  ok: [pik8s000]
+2018-01-12 20:56:16,846 p=12499 u=cshort |  TASK [dashboard : Install k8s Dashboard] ***************************************************************************************************************
+2018-01-12 20:56:17,669 p=12499 u=cshort |  skipping: [pik8s000]
+2018-01-12 20:56:17,685 p=12499 u=cshort |  TASK [dashboard : Fetch kubeconfig file] ***************************************************************************************************************
+2018-01-12 20:56:17,726 p=12499 u=cshort |  skipping: [pik8s000]
+2018-01-12 20:56:17,728 p=12499 u=cshort |  PLAY RECAP *********************************************************************************************************************************************
+2018-01-12 20:56:17,728 p=12499 u=cshort |  pik8s000                   : ok=1    changed=0    unreachable=0    failed=0   
+2018-01-12 20:56:22,187 p=12513 u=cshort |  PLAY [master] ******************************************************************************************************************************************
+2018-01-12 20:56:22,227 p=12513 u=cshort |  TASK [dashboard : Install k8s Dashboard] ***************************************************************************************************************
+2018-01-12 20:56:26,578 p=12513 u=cshort |  changed: [pik8s000]
+2018-01-12 20:56:26,589 p=12513 u=cshort |  TASK [dashboard : Fetch kubeconfig file] ***************************************************************************************************************
+2018-01-12 20:56:27,477 p=12513 u=cshort |  changed: [pik8s000]
+2018-01-12 20:56:27,480 p=12513 u=cshort |  PLAY RECAP *********************************************************************************************************************************************
+2018-01-12 20:56:27,481 p=12513 u=cshort |  pik8s000                   : ok=2    changed=2    unreachable=0    failed=0   
+2018-01-12 21:18:09,926 p=12859 u=cshort |  PLAY [master] ******************************************************************************************************************************************
+2018-01-12 21:18:10,022 p=12859 u=cshort |  TASK [dashboard : Install k8s Dashboard] ***************************************************************************************************************
+2018-01-12 21:18:14,019 p=12859 u=cshort |  fatal: [pik8s000]: FAILED! => {"changed": true, "cmd": "kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml", "delta": "0:00:02.639921", "end": "2018-01-12 21:18:13.930595", "msg": "non-zero return code", "rc": 1, "start": "2018-01-12 21:18:11.290674", "stderr": "Error from server (AlreadyExists): error when creating \"https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml\": secrets \"kubernetes-dashboard-certs\" already exists\nError from server (AlreadyExists): error when creating \"https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml\": serviceaccounts \"kubernetes-dashboard\" already exists\nError from server (AlreadyExists): error when creating \"https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml\": roles.rbac.authorization.k8s.io \"kubernetes-dashboard-minimal\" already exists\nError from server (AlreadyExists): error when creating \"https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml\": rolebindings.rbac.authorization.k8s.io \"kubernetes-dashboard-minimal\" already exists\nError from server (AlreadyExists): error when creating \"https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml\": deployments.apps \"kubernetes-dashboard\" already exists\nError from server (AlreadyExists): error when creating \"https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml\": services \"kubernetes-dashboard\" already exists", "stderr_lines": ["Error from server (AlreadyExists): error when creating \"https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml\": secrets \"kubernetes-dashboard-certs\" already exists", "Error from server (AlreadyExists): error when creating \"https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml\": serviceaccounts \"kubernetes-dashboard\" already exists", "Error from server (AlreadyExists): error when creating \"https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml\": roles.rbac.authorization.k8s.io \"kubernetes-dashboard-minimal\" already exists", "Error from server (AlreadyExists): error when creating \"https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml\": rolebindings.rbac.authorization.k8s.io \"kubernetes-dashboard-minimal\" already exists", "Error from server (AlreadyExists): error when creating \"https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml\": deployments.apps \"kubernetes-dashboard\" already exists", "Error from server (AlreadyExists): error when creating \"https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml\": services \"kubernetes-dashboard\" already exists"], "stdout": "", "stdout_lines": []}
+2018-01-12 21:18:14,023 p=12859 u=cshort |  PLAY RECAP *********************************************************************************************************************************************
+2018-01-12 21:18:14,023 p=12859 u=cshort |  pik8s000                   : ok=0    changed=0    unreachable=0    failed=1   
+2018-01-12 21:43:56,061 p=12940 u=cshort |  PLAY [master] ******************************************************************************************************************************************
+2018-01-12 21:43:56,127 p=12940 u=cshort |  TASK [dashboard : Install k8s Dashboard] ***************************************************************************************************************
+2018-01-12 21:44:02,217 p=12940 u=cshort |  changed: [pik8s000]
+2018-01-12 21:44:02,230 p=12940 u=cshort |  TASK [dashboard : Fetch kubeconfig file] ***************************************************************************************************************
+2018-01-12 21:44:03,028 p=12940 u=cshort |  ok: [pik8s000]
+2018-01-12 21:44:03,031 p=12940 u=cshort |  PLAY RECAP *********************************************************************************************************************************************
+2018-01-12 21:44:03,032 p=12940 u=cshort |  pik8s000                   : ok=2    changed=1    unreachable=0    failed=0   
+2018-01-15 10:45:44,546 p=20275 u=cshort |  PLAY [master] ******************************************************************************************************************************************
+2018-01-15 10:45:44,609 p=20275 u=cshort |  TASK [Gathering Facts] *********************************************************************************************************************************
+2018-01-15 10:45:48,693 p=20275 u=cshort |  ok: [pik8s000]
+2018-01-15 10:45:48,706 p=20275 u=cshort |  TASK [dashboard : Install k8s Dashboard] ***************************************************************************************************************
+2018-01-15 10:45:53,565 p=20275 u=cshort |  changed: [pik8s000]
+2018-01-15 10:45:53,575 p=20275 u=cshort |  TASK [dashboard : Configure Dashboard Access] **********************************************************************************************************
+2018-01-15 10:45:56,661 p=20275 u=cshort |  changed: [pik8s000]
+2018-01-15 10:45:56,672 p=20275 u=cshort |  TASK [dashboard : Fetch kubeconfig file] ***************************************************************************************************************
+2018-01-15 10:45:57,499 p=20275 u=cshort |  ok: [pik8s000]
+2018-01-15 10:45:57,502 p=20275 u=cshort |  PLAY RECAP *********************************************************************************************************************************************
+2018-01-15 10:45:57,502 p=20275 u=cshort |  pik8s000                   : ok=4    changed=2    unreachable=0    failed=0   
+2018-01-15 13:52:03,596 p=21471 u=cshort |  PLAY [master] ******************************************************************************************************************************************
+2018-01-15 13:52:03,782 p=21471 u=cshort |  TASK [dashboard : Install k8s Dashboard] ***************************************************************************************************************
+2018-01-15 13:52:08,530 p=21471 u=cshort |  changed: [pik8s000]
+2018-01-15 13:52:08,540 p=21471 u=cshort |  TASK [dashboard : Configure Dashboard Access] **********************************************************************************************************
+2018-01-15 13:52:11,446 p=21471 u=cshort |  changed: [pik8s000]
+2018-01-15 13:52:11,460 p=21471 u=cshort |  TASK [dashboard : Fetch kubeconfig file] ***************************************************************************************************************
+2018-01-15 13:52:12,452 p=21471 u=cshort |  ok: [pik8s000]
+2018-01-15 13:52:12,455 p=21471 u=cshort |  PLAY RECAP *********************************************************************************************************************************************
+2018-01-15 13:52:12,455 p=21471 u=cshort |  pik8s000                   : ok=3    changed=2    unreachable=0    failed=0   
+2018-01-15 13:53:07,039 p=21510 u=cshort |  PLAY [master] ******************************************************************************************************************************************
+2018-01-15 13:53:07,105 p=21510 u=cshort |  TASK [dashboard : Install k8s Dashboard] ***************************************************************************************************************
+2018-01-15 13:53:10,574 p=21510 u=cshort |  changed: [pik8s000]
+2018-01-15 13:53:10,591 p=21510 u=cshort |  TASK [dashboard : Configure Dashboard Access] **********************************************************************************************************
+2018-01-15 13:53:13,554 p=21510 u=cshort |  changed: [pik8s000]
+2018-01-15 13:53:13,566 p=21510 u=cshort |  TASK [dashboard : Fetch kubeconfig file] ***************************************************************************************************************
+2018-01-15 13:53:14,481 p=21510 u=cshort |  ok: [pik8s000]
+2018-01-15 13:53:14,485 p=21510 u=cshort |  PLAY RECAP *********************************************************************************************************************************************
+2018-01-15 13:53:14,485 p=21510 u=cshort |  pik8s000                   : ok=3    changed=2    unreachable=0    failed=0   

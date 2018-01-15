@@ -1,0 +1,44 @@
+---
+# tasks file for master
+- name: Reset Kubernetes Master
+  shell: kubeadm reset
+  register: kubeadm_reset
+
+- name: Initialize Master
+  shell: kubeadm init --apiserver-advertise-address={{ ansible_default_ipv4.address }} --token={{ token }}
+  register: kubeadm_init
+  when: kubeadm_reset|succeeded
+
+- name: Create Kubernetes config directory
+  file:
+    path: /root/.kube/
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Copy admin.conf to config directory
+  copy:
+    src: /etc/kubernetes/admin.conf
+    dest: /root/.kube/config
+    owner: root
+    group: root
+    mode: 0755
+    remote_src: yes
+  when: kubeadm_init
+
+- name: Join Kubernetes Cluster
+  shell: kubeadm join --skip-preflight-checks --token {{ token }} {{ groups['master'][0] }}:6443 --discovery-token-unsafe-skip-ca-verification
+  when: kubeadm_reset|succeeded
+  register: kubeadm_join
+
+- name: Install Weave (Networking)
+  shell: kubectl apply -f https://git.io/weave-kube-1.6
+
+- name: Poke kubelet
+  systemd:
+    name: kubelet
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+  register: kubelet_poke
