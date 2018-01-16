@@ -4,9 +4,9 @@
 
 ### Why?
 
-Because Raspberry Pis are rad, Ansible is awesome, and Kubernetes is a killer app! Also, it's cheaper than a year of GKE.
+Because Raspberry Pis are rad, Ansible is awesome, and Kubernetes is keen!
 
-### Prerequisites
+# Prerequisites
 
 * Raspberry Pi 3 (3 or more)
 * [Raspbian Lite](https://www.raspberrypi.org/downloads/raspbian/)
@@ -15,11 +15,11 @@ Because Raspberry Pis are rad, Ansible is awesome, and Kubernetes is a killer ap
   * The pi user is fine just change its password
 * [Ansible](http://docs.ansible.com/ansible/latest/intro_installation.html) 2.2 or higher
 
-### Recommendations
+# Recommendations
 
 * Since Raspbian Lite is being used it's recommended that the video memory of the Raspberry Pi 3s be set to its lowest setting (16 MB).
 
-### References & Credits
+# References & Credits
 
 These playbooks were assembled using a handful of very helpful guides:
 
