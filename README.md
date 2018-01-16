@@ -1,23 +1,101 @@
 # rak8s (pronounced rackets - /ˈrækɪts/)
 
-## Stand up a Raspberry Pi based Kubernetes cluster with Ansible
+Stand up a Raspberry Pi based Kubernetes cluster with Ansible
 
-### Why?
+## Why?
 
-Because Raspberry Pis are rad, Ansible is awesome, and Kubernetes is keen!
+* Raspberry Pis are rad
+* Ansible is awesome
+* Kubernetes is keen
+
+Also, it's cheaper than a year of GKE. Plus, why not run Kubernetes in your home?
 
 # Prerequisites
 
+## Hardware
+
 * Raspberry Pi 3 (3 or more)
-* [Raspbian Lite](https://www.raspberrypi.org/downloads/raspbian/)
-* Raspberry Pis should have static IPs (requirement for Kubernetes and Ansible inventory)
+* Class 10 SD Cards
+* Network connection (wireless or wired) with access to the internet
+
+## Software
+
+* [Raspbian Lite](https://www.raspberrypi.org/downloads/raspbian/) (installed on each Raspberry Pi)
+
+* Raspberry Pis should have static IPs
+    * Requirement for Kubernetes and Ansible inventory
+    * You can set these via OS configuration or DHCP reservations (your choice)
+
 * Ability to SSH into all Raspberry Pis and escalate privileges with sudo
-  * The pi user is fine just change its password
+    * The pi user is fine just change its password
+
 * [Ansible](http://docs.ansible.com/ansible/latest/intro_installation.html) 2.2 or higher
 
-# Recommendations
+* [`kubectl`](https://kubernetes.io/docs/tasks/tools/install-kubectl/) should be available on the system you intend to use to interact with the Kubernetes cluster.
+    * If you are going to login to one of the Raspberry Pis to interact with the cluster `kubectl` is installed and configured by default on the master Kubernetes master.
+    * If you are administering the cluster from a remote machine (your laptop, desktop, server, bastion host, etc.) `kubectl` will not be installed on the remote machine but it will be configured to interact with the newly built cluster once `kubectl` is installed.
+
+## Recommendations
 
 * Since Raspbian Lite is being used it's recommended that the video memory of the Raspberry Pi 3s be set to its lowest setting (16 MB).
+* Setup SSH key pairs so your password is not required every time Ansible runs
+
+# Stand Up Your Kubernetes Cluster
+
+## Download the latest release or clone the repo:
+
+```
+git clone https://github.com/rak8s/rak8s.git
+```
+
+## Modify ansible.cfg and inventory
+
+Modify the `inventory` file to suit your environment. Change the names to your liking and the IPs to the addresses of your Raspberry Pis.
+
+If your SSH user on the Raspberry Pis are not the Raspbian default `pi` user modify `remote_user` in the `ansible.cfg`.
+
+## Confirm Ansible is working with your Raspberry Pis:
+
+```ansible -m ping all```
+
+## Deploy, Deploy, Deploy
+
+```ansible-playbook cluster.yml```
+
+# Interact with Kubernetes
+
+## CLI
+
+Test your Kubernetes cluster is up and running:
+
+```kubectl get nodes```
+
+The output should look something like this:
+
+```
+NAME       STATUS    ROLES     AGE       VERSION
+pik8s000   Ready     master    2d        v1.9.1
+pik8s001   Ready     <none>    2d        v1.9.1
+pik8s002   Ready     <none>    2d        v1.9.1
+pik8s003   Ready     <none>    2d        v1.9.1
+pik8s005   Ready     <none>    2d        v1.9.1
+pik8s004   Ready     <none>    2d        v1.9.1
+```
+
+## Dashboard
+
+rak8s installs the non-HTTPS version of the Kubernetes dashboard. This is not recommended for production clusters but, it simplifies the setup. Access the dashboard by running:
+
+```kubectl proxy```
+
+Then open a web browser and navigate to:
+[http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/](http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/)
+
+# Etymology
+
+**rak8s** (pronounced rackets - /ˈrækɪts/)
+
+Coined by [Kendrick Coleman](https://github.com/kacole2) on [13 Jan 2018](https://twitter.com/KendrickColeman/status/952242602690129921)
 
 # References & Credits
 
