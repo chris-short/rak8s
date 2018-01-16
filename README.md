@@ -8,6 +8,8 @@ Stand up a Raspberry Pi based Kubernetes cluster with Ansible
 * Ansible is awesome
 * Kubernetes is keen
 
+ARM is going to be the datacenter and home computing platform of the future. It makes a lot of sense to start getting used to working in its unique environment.
+
 Also, it's cheaper than a year of GKE. Plus, why not run Kubernetes in your home?
 
 # Prerequisites
@@ -56,11 +58,15 @@ If your SSH user on the Raspberry Pis are not the Raspbian default `pi` user mod
 
 ## Confirm Ansible is working with your Raspberry Pis:
 
-```ansible -m ping all```
+```
+ansible -m ping all
+```
 
 ## Deploy, Deploy, Deploy
 
-```ansible-playbook cluster.yml```
+```
+ansible-playbook cluster.yml
+```
 
 # Interact with Kubernetes
 
@@ -68,7 +74,9 @@ If your SSH user on the Raspberry Pis are not the Raspbian default `pi` user mod
 
 Test your Kubernetes cluster is up and running:
 
-```kubectl get nodes```
+```
+kubectl get nodes
+```
 
 The output should look something like this:
 
@@ -86,7 +94,9 @@ pik8s004   Ready     <none>    2d        v1.9.1
 
 rak8s installs the non-HTTPS version of the Kubernetes dashboard. This is not recommended for production clusters but, it simplifies the setup. Access the dashboard by running:
 
-```kubectl proxy```
+```
+kubectl proxy
+```
 
 Then open a web browser and navigate to:
 [http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/](http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/)
