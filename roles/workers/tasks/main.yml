@@ -5,7 +5,7 @@
   register: kubeadm_reset
 
 - name: Join Kubernetes Cluster
-  shell: kubeadm join --skip-preflight-checks --token {{ token }} {{ groups['master'][0] }}:6443 --discovery-token-unsafe-skip-ca-verification
+  shell: kubeadm join --ignore-preflight-errors=all --token {{ token }} {{ groups['master'][0] }}:6443 --discovery-token-unsafe-skip-ca-verification
   when: kubeadm_reset|succeeded
   register: kubeadm_join
 
