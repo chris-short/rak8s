@@ -4,7 +4,7 @@
   shell: kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard-arm.yaml
 
 - name: Configure Dashboard Access
-  shell: kubectl apply -f https://raw.githubusercontent.com/chris-short/pik8s/master/roles/dashboard/files/dashboard-admin.yaml
+  shell: kubectl apply -f https://raw.githubusercontent.com/rak8s/rak8s/master/roles/dashboard/files/dashboard-admin.yaml
 
 - name: Fetch kubeconfig file
   fetch:
