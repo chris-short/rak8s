@@ -6,6 +6,9 @@
 - name: Configure Dashboard Access
   shell: kubectl apply -f https://raw.githubusercontent.com/rak8s/rak8s/master/roles/dashboard/files/dashboard-admin.yaml
 
+- name: Force Rebuild Dashboard Pods
+  shell: kubectl -n kube-system delete $(kubectl -n kube-system get pod -o name | grep dashboard)
+
 - name: Fetch kubeconfig file
   fetch:
     src: /root/.kube/config
