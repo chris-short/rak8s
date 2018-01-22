@@ -39,7 +39,7 @@ Also, it's cheaper than a year of GKE. Plus, why not run Kubernetes in your home
 
 ## Recommendations
 
-* Since Raspbian Lite is being used it's recommended that the video memory of the Raspberry Pi 3s be set to its lowest setting (16 MB).
+* Since Raspbian Lite is being used it's recommended that the video memory of the Raspberry Pi 3s be [set to its lowest setting](https://www.raspberrypi.org/documentation/configuration/config-txt/memory.md) (16 MB).
 * Setup SSH key pairs so your password is not required every time Ansible runs
 
 # Stand Up Your Kubernetes Cluster
