@@ -101,6 +101,10 @@ kubectl proxy
 Then open a web browser and navigate to:
 [http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/](http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/)
 
+# Where to Get Help
+
+If you run into any problems please join our welcoming [Discourse](https://discourse.rak8s.io/) community. If you find a bug please open an issue and pull requests are always welcome.
+
 # Etymology
 
 **rak8s** (pronounced rackets - /ˈrækɪts/)
