@@ -14,6 +14,6 @@ The fields below MUST be filled out to assist in troubleshooting your issue to r
 
 ## Raspberry Pi Hardware Version:
 
-## Raspberry Pi OS & Version (`cat /etc/release`):
+## Raspberry Pi OS & Version (`cat /etc/os-release`):
 
 # Detailed description of the issue:
