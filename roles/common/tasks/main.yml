@@ -16,6 +16,7 @@
     name: net.bridge.bridge-nf-call-iptables
     value: 1
     state: present
+    ignoreerrors: yes
 
 - name: apt-get update
   apt:
