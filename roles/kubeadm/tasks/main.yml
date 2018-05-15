@@ -17,6 +17,12 @@
   script: files/get-docker.sh
   when: docker_there.stat.exists == False
 
+- name: Pass bridged IPv4 traffic to iptables' chains
+  sysctl:
+    name: net.bridge.bridge-nf-call-iptables
+    value: 1
+    state: present
+
 # https://kubernetes.io/docs/setup/independent/install-kubeadm/
 - name: Install apt-transport-https
   apt:
