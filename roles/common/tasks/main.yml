@@ -11,12 +11,6 @@
   tags:
     - boot
 
-- name: Pass bridged IPv4 traffic to iptables' chains
-  sysctl:
-    name: net.bridge.bridge-nf-call-iptables
-    value: 1
-    state: present
-
 - name: apt-get update
   apt:
     update_cache=yes
