@@ -1,0 +1,46 @@
+---
+- name: "Reset Kubernetes"
+  shell: echo $(kubeadm reset && echo 'true') 
+
+- name: "Remove docker images" 
+  shell: echo $(docker rmi --force $(docker images --all -q) && echo 'true')
+  become: true
+
+- name: "apt-get update"
+  apt:
+    update_cache: yes
+    autoclean: yes
+    autoremove: yes
+
+- name: "apt-get purge packages"
+  apt:
+    name: "{{ item }}"
+    state: absent
+    purge: yes
+    autoremove: yes
+    force: yes
+  with_items:
+    - kubelet
+    - kubeadm
+    - kubectl
+    - docker-ce
+
+- name: "Remove pod logging"
+  shell: rm -rf /var/log/pods/* 
+  become: True
+
+- name: Reboot
+  shell: sleep 2 && shutdown -r now "Ansible Reboot"
+  async: 1
+  poll: 0
+  ignore_errors: True
+
+- name: Wait for Reboot
+  local_action: wait_for
+  args:
+    host: "{{ inventory_hostname }}"
+    port: 22
+    delay: 15
+    timeout: 90
+  become: False
+
