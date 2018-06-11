@@ -4,8 +4,8 @@
   shell: kubeadm reset
   register: kubeadm_reset
 
-- name: Initialize Master
-  shell: kubeadm init --apiserver-advertise-address={{ ansible_default_ipv4.address }} --token={{ token }}
+- name: "Initialize Master  {{ kubernetes_version }}"
+  shell: kubeadm init --apiserver-advertise-address={{ ansible_default_ipv4.address }} --token={{ token }} --kubernetes-version={{ kubernetes_version }} --pod-network-cidr=172.30.0.0/16
   register: kubeadm_init
   when: kubeadm_reset|succeeded
 
@@ -32,8 +32,8 @@
   when: kubeadm_reset|succeeded
   register: kubeadm_join
 
-- name: Install Weave (Networking)
-  shell: kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')" 
+- name: Install Flannel (Networking)
+  shell: "curl -sSL https://rawgit.com/coreos/flannel/{{ flannel_version }}/Documentation/kube-flannel.yml | sed 's/amd64/arm/g' | kubectl create -f -" 
 
 - name: Poke kubelet
   systemd:
