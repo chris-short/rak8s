@@ -28,6 +28,8 @@ if [ -z "$CHANNEL" ]; then
 	CHANNEL=$DEFAULT_CHANNEL_VALUE
 fi
 
+DOCKERVERSION=$1
+
 DOWNLOAD_URL="https://download.docker.com"
 
 SUPPORT_MAP="
@@ -386,7 +388,7 @@ do_install() {
 					$sh_c 'sed -i "/deb-src.*download\.docker/d" /etc/apt/sources.list.d/docker.list'
 				fi
 				$sh_c 'apt-get update -qq >/dev/null'
-				$sh_c 'apt-get install -y -qq --no-install-recommends docker-ce >/dev/null'
+				$sh_c "apt-get install -y -qq --no-install-recommends docker-ce=${DOCKERVERSION} >/dev/null"
 			)
 			echo_docker_as_nonroot
 			exit 0

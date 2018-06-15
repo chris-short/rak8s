@@ -13,8 +13,8 @@
   ignore_errors: True
 
 # https://docs.docker.com/engine/installation/linux/docker-ce/debian/#install-using-the-convenience-script
-- name: Run Docker Install Script
-  script: files/get-docker.sh
+- name: Run Docker {{ docker_ce_version }} Install Script
+  script: "files/get-docker.sh {{ docker_ce_version }}"
   when: docker_there.stat.exists == False
 
 - name: Pass bridged IPv4 traffic to iptables' chains
@@ -46,10 +46,11 @@
     autoclean: yes
     autoremove: yes
 
-- name: Install k8s Y'all
+- name: Install k8s {{ kubernetes_package_version }} Y'all
   apt:
-    name: "{{ item }}"
-    state: latest
+    name: "{{ item }}={{ kubernetes_package_version }}"
+    state: present
+    force: yes
   with_items:
     - kubelet
     - kubeadm
