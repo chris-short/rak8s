@@ -1,4 +1,18 @@
 ---
+- name: Ensure hostname set
+  hostname: name={{ inventory_hostname }}
+  when: not inventory_hostname|match('(\d{1,3}\.){3}\d{1,3}')
+  tags:
+    - hostname
+
+- name: Ensure hostname is in /etc/hosts
+  lineinfile:
+    dest=/etc/hosts
+    regexp="^{{ ansible_default_ipv4.address }}.+$"
+    line="{{ ansible_default_ipv4.address }} {{ ansible_fqdn }} {{ ansible_hostname }}"
+  tags:
+    - hostname
+
 # tasks file for common
 - name: Enabling cgroup options at boot
   copy:
