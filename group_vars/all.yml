@@ -1,8 +1,8 @@
 token: udy29x.ugyyk3tumg27atmr
 podnet: 10.244.0.0/16
 
-kubernetes_package_version: "1.9.7-00"
-# Available versions:
+kubernetes_package_version: "1.9.8-00"
+# Available versions (sudo apt-cache policy kubelet):
 # 1.10.3-00
 # 1.10.2-00
 # 1.10.1-00
@@ -12,7 +12,7 @@ kubernetes_package_version: "1.9.7-00"
 # 1.9.6-00
 # 1.9.5-00
 
-kubernetes_version: "v1.9.7"
+kubernetes_version: "v1.9.8"
 # Available versions:
 # v1.10.3
 # v1.10.2
@@ -24,7 +24,7 @@ kubernetes_version: "v1.9.7"
 # v1.9.5
 
 docker_ce_version: "18.04.0~ce~3-0~raspbian"
-# Available versions:
+# Available versions (sudo apt-cache policy docker-ce):
 # 18.05.0~ce~3-0~raspbian
 # 18.04.0~ce~3-0~raspbian
 # 18.03.1~ce-0~raspbian

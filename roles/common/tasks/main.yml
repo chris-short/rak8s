@@ -24,6 +24,17 @@
   tags:
     - boot
 
+- name: Set GPU Memory to 8 MB
+  copy:
+    src: config.txt.j2
+    dest: /boot/config.txt
+    owner: root
+    group: root
+    mode: 0755
+  register: gpumem
+  tags:
+    - boot
+
 - name: apt-get update
   apt:
     update_cache=yes
@@ -40,7 +51,7 @@
   async: 1
   poll: 0
   ignore_errors: True
-  when: cmdline or hostname is changed
+  when: cmdline or hostname or gpumem is changed
   tags:
     - boot
     - shutdown
@@ -53,7 +64,7 @@
     delay: 20
     timeout: 120
   become: False
-  when: cmdline or hostname is changed
+  when: cmdline or hostname or gpumem is changed
   tags:
     - boot
     - shutdown
