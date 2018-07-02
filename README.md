@@ -61,7 +61,7 @@ If your SSH user on the Raspberry Pis are not the Raspbian default `pi` user mod
 ```
 ansible -m ping all
 ```
-
+This may fail to ping if you have not setup SSH keys and only configured your Pi's with passwords
 ## Deploy, Deploy, Deploy
 
 ```
@@ -100,6 +100,21 @@ kubectl proxy
 
 Then open a web browser and navigate to:
 [http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/](http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/)
+
+# Need to Start Over?
+
+Did something go wrong? Nodes fail some process or not joined to the cluster? Break Docker Versions with apt-update? 
+
+Try the process again from the beginning:
+
+```
+ansible-playbook cluster.yml
+```
+Wait for everything to run and then start again with:
+
+```
+ansible-playbook cluster.yml
+```
 
 # Where to Get Help
 
