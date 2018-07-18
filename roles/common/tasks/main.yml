@@ -51,7 +51,7 @@
     host: "{{ inventory_hostname }}"
     port: 22
     delay: 20
-    timeout: 120
+    timeout: 180
   become: False
   when: cmdline or hostname is changed
   tags:
