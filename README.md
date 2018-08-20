@@ -101,6 +101,10 @@ kubectl proxy
 Then open a web browser and navigate to:
 [http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/](http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/)
 
+Note that the recent versions of the dashboard will need role changes or (simpler) for you to download the token from the kubernetes-dashboard service account.
+
+./get-dashboard-token.sh allows you to do this and will write a dashboard-token.txt file to ~/.kube to authenticate with the web interface
+
 # Need to Start Over?
 
 Did something go wrong? Nodes fail some process or not joined to the cluster? Break Docker Versions with apt-update? 
