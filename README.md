@@ -70,6 +70,21 @@ ansible-playbook cluster.yml
 
 # Interact with Kubernetes
 
+## Set up CLI as pi user
+
+As normal Pi user:
+
+```
+mkdir .kube
+sudo cat /root/.kube/config > .kube/config
+```
+
+## Access CLI remotely
+
+```
+scp {user}@{master}:.kube/config .kube/
+```
+
 ## CLI
 
 Test your Kubernetes cluster is up and running:
