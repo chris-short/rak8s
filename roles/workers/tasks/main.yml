@@ -1,7 +1,7 @@
 ---
 # tasks file for minions
 - name: Reset Kubernetes
-  shell: kubeadm reset
+  shell: kubeadm reset -f
   register: kubeadm_reset
 
 - name: Join Kubernetes Cluster

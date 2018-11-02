@@ -6,7 +6,7 @@
 - hosts: master
   roles:
     - master
-    - dashboard
+#    - dashboard
 
 - hosts: all:!master
   roles:

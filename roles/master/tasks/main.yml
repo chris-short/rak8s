@@ -1,7 +1,7 @@
 ---
 # tasks file for master
 - name: Reset Kubernetes Master
-  shell: kubeadm reset
+  shell: kubeadm reset -f
   register: kubeadm_reset
 
 - name: "Initialize Master {{ kubernetes_version }}"

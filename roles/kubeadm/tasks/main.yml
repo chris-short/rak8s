@@ -31,6 +31,8 @@
 
 - name: Add Google Cloud Repo Key
   shell: curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
+  args:
+    warn: no
 
 - name: Add Kubernetes to Available apt Sources
   template:
