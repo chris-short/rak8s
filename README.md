@@ -108,7 +108,7 @@ Did something go wrong? Nodes fail some process or not joined to the cluster? Br
 Try the process again from the beginning:
 
 ```
-ansible-playbook cluster.yml
+ansible-playbook cleanup.yml
 ```
 Wait for everything to run and then start again with:
 
