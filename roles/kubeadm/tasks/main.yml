@@ -16,6 +16,12 @@
 - name: Run Docker {{ docker_ce_version }} Install Script
   script: "files/get-docker.sh {{ docker_ce_version }}"
   when: docker_there.stat.exists == False
+  register: docker_installed
+
+- name: Lock docker version to {{ docker_ce_version}}
+  command: /usr/bin/apt-mark hold docker-ce
+  when: docker_installed.changed
+
 
 - name: Pass bridged IPv4 traffic to iptables' chains
   sysctl:
