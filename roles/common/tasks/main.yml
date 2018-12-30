@@ -19,6 +19,18 @@
     name: UTC
   register: timezone
 
+- name: gpu mem check
+  shell: cat /boot/config.txt | grep gpu_mem
+  changed_when: false
+  register: gpu_mem_check
+
+- name: reduce gpu memory
+  lineinfile:
+    path: /boot/config.txt
+    line: gpu_mem=16
+  register: gpu_mem
+  when: gpu_mem_check.stdout == ""
+
 - name: Enabling cgroup options at boot
   copy:
     src: cmdline.txt
@@ -49,11 +61,11 @@
 #- name: Reboot (as needed)
 #  reboot:
 #    reboot_timeout: 3600
-#  when: cmdline or timezone or hostname is changed
+#  when: cmdline or timezone or hostname or gpu_mem is changed
 #  tags:
 #    - boot
 #    - shutdown
 - name: Reboot Message
   debug:
     msg: "A reboot is required but the reboot module is a little wonky. Hopefully someone fixes this soon."
-  when: cmdline or timezone or hostname is changed
+  when: cmdline or timezone or hostname or gpu_mem is changed
