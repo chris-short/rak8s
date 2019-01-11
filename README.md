@@ -107,7 +107,13 @@ pik8s004   Ready     <none>    2d        v1.9.1
 
 ## Dashboard
 
-rak8s installs the non-HTTPS version of the Kubernetes dashboard. This is not recommended for production clusters but, it simplifies the setup. Access the dashboard by running:
+It is possible to install the non-HTTPS version of the Kubernetes dashboard. This is not recommended for production clusters but, it simplifies the setup. Install using:
+
+```
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.0/src/deploy/recommended/kubernetes-dashboard-arm.yaml
+```
+
+Then, you can access the dashboard by running:
 
 ```
 kubectl proxy
@@ -118,7 +124,9 @@ Then open a web browser and navigate to:
 
 Note that the recent versions of the dashboard will need role changes or (simpler) for you to download the token from the kubernetes-dashboard service account.
 
-./get-dashboard-token.sh allows you to do this and will write a dashboard-token.txt file to ~/.kube to authenticate with the web interface
+```./get-dashboard-token.sh``` allows you to do this and will write a ```dashboard-token.txt``` file to ```~/.kube``` to authenticate with the web interface
+
+With the latest versions of k8s with RBAC you also need to enable remote access by following [these instructions](https://blog.tekspace.io/kubernetes-dashboard-remote-access/)
 
 # Need to Start Over?
 
