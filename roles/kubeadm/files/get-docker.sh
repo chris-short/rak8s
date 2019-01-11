@@ -389,6 +389,7 @@ do_install() {
 				fi
 				$sh_c 'apt-get update -qq >/dev/null'
 				$sh_c "apt-get install -y -qq --no-install-recommends docker-ce=${DOCKERVERSION} >/dev/null"
+				$sh_c "apt-mark hold docker-ce"
 			)
 			echo_docker_as_nonroot
 			exit 0

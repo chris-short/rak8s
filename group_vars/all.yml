@@ -23,7 +23,7 @@ kubernetes_version: "v1.11.4"
 # v1.9.6
 # v1.9.5
 
-docker_ce_version: "18.04.0~ce~3-0~raspbian"
+docker_ce_version: "18.06.0~ce~3-0~raspbian"
 # Available versions:
 # 18.05.0~ce~3-0~raspbian
 # 18.04.0~ce~3-0~raspbian
@@ -39,3 +39,4 @@ flannel_version: "v0.10.0"
 # v0.8.0
 # v0.7.1
 # v0.7.0
+
