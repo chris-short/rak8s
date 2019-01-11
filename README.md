@@ -70,6 +70,21 @@ ansible-playbook cluster.yml
 
 # Interact with Kubernetes
 
+## Set up CLI as pi user
+
+As normal Pi user:
+
+```
+mkdir .kube
+sudo cat /root/.kube/config > .kube/config
+```
+
+## Access CLI remotely
+
+```
+scp {user}@{master}:.kube/config .kube/
+```
+
 ## CLI
 
 Test your Kubernetes cluster is up and running:
@@ -118,6 +133,51 @@ Wait for everything to run and then start again with:
 
 ```
 ansible-playbook cluster.yml
+```
+
+# Technical setup details
+
+## Networking
+
+- Pod network CIDR is set to 172.30.0.0/16
+- Service network CIDR set to 10.244.0.0/16
+- Using [flannel](https://github.com/coreos/flannel) for networking plugin - default configuration with VXLAN
+
+There is no LB or Ingress controller set up, suggested approach:
+
+- Install MetalLB
+
+```
+kubectl apply -f https://raw.githubusercontent.com/google/metallb/v0.7.3/manifests/metallb.yaml
+```
+
+- Suggested configuration
+
+```
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: metallb-system
+  name: config
+data:
+  config: |
+    address-pools:
+    - name: default
+      protocol: layer2
+      addresses:
+      - 192.168.4.240-192.168.4.250
+```
+
+## Useful setup steps for client machine:
+
+- Enable [kubectl auto-complete](https://kubernetes.io/docs/reference/kubectl/cheatsheet/#kubectl-autocomplete)
+
+## Helm
+
+Helm is not well supported on ARM but it can be deployed using a third party repo:
+
+```
+helm init --tiller-image=jessestuart/tiller:v2.9.1
 ```
 
 # Where to Get Help

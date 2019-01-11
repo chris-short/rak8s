@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+        name: nginx-config
+data:
+        default.conf: |
+                server {
+                        listen 80;
+                        listen [::]:80;
+                        server_name  _;
+                        location / {
+                                add_header Content-Type text/plain; # Prevents download
+                                return 200 "Hello world! Kubernetes + Let's encrypt demo.";
+                        }       
+                }
+

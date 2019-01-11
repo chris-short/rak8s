@@ -1,0 +1,14 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: "kubernetes-demo-app-ingress-service"
+spec:
+  rules:
+  - host: nginx-demo
+    http:
+      paths:
+      # The * is needed so that all traffic gets redirected to nginx
+      - path: /*
+        backend:
+          serviceName: nginx
+          servicePort: 80
