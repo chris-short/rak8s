@@ -1,17 +1,23 @@
 ---
 - name: Ensure hostname set
-  hostname: name={{ inventory_hostname }}
+  hostname:
+    name: "{{ inventory_hostname }}"
   when: not inventory_hostname is match('(\d{1,3}\.){3}\d{1,3}')
   register: hostname
   tags: hostname
 
 - name: Ensure hostname is in /etc/hosts
   lineinfile:
-    dest=/etc/hosts
-    regexp="^{{ ansible_default_ipv4.address }}.+$"
-    line="{{ ansible_default_ipv4.address }} {{ ansible_fqdn }} {{ ansible_hostname }}"
+    dest: /etc/hosts
+    regexp: "^{{ ansible_default_ipv4.address }}.+$"
+    line: "{{ ansible_default_ipv4.address }} {{ ansible_fqdn }} {{ ansible_hostname }}"
   register: hostname
   tags: hostname
+
+- name: set timezone to UTC
+  timezone:
+    name: UTC
+  register: timezone
 
 - name: Enabling cgroup options at boot
   copy:
@@ -24,36 +30,30 @@
   tags:
     - boot
 
+- name: python-apt dependency
+  shell: apt-get install -y python-apt
+  args:
+    warn: no
+
 - name: apt-get update
   apt:
-    update_cache=yes
-    autoclean=yes
-    autoremove=yes
-    cache_valid_time=86400
+    update_cache: yes
+    autoclean: yes
+    autoremove: yes
+    cache_valid_time: 86400
 
 - name: apt-get upgrade
   apt:
-    upgrade=full
+    upgrade: full
 
-- name: Reboot
-  shell: sleep 2 && shutdown -r now "Ansible Reboot for /boot/cmdline.txt Change"
-  async: 1
-  poll: 0
-  ignore_errors: True
-  when: cmdline or hostname is changed
-  tags:
-    - boot
-    - shutdown
-
-- name: Wait for Reboot
-  local_action: wait_for
-  args:
-    host: "{{ inventory_hostname }}"
-    port: 22
-    delay: 20
-    timeout: 180
-  become: False
-  when: cmdline or hostname is changed
-  tags:
-    - boot
-    - shutdown
+#- name: Reboot (as needed)
+#  reboot:
+#    reboot_timeout: 3600
+#  when: cmdline or timezone or hostname is changed
+#  tags:
+#    - boot
+#    - shutdown
+- name: Reboot Message
+  debug:
+    msg: "A reboot is required but the reboot module is a little wonky. Hopefully someone fixes this soon."
+  when: cmdline or timezone or hostname is changed
