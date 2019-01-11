@@ -1,0 +1,151 @@
+---
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: stilton
+  labels:
+    app: cheese
+    cheese: stilton
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: cheese
+      task: stilton
+  template:
+    metadata:
+      labels:
+        app: cheese
+        task: stilton
+    spec:
+      containers:
+      - name: cheese
+        image: cscashby/cheese:stilton
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+---
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: cheddar
+  labels:
+    app: cheese
+    cheese: cheddar
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: cheese
+      task: cheddar
+  template:
+    metadata:
+      labels:
+        app: cheese
+        task: cheddar
+    spec:
+      containers:
+      - name: cheese
+        image: cscashby/cheese:cheddar
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+---
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: wensleydale
+  labels:
+    app: cheese
+    cheese: wensleydale
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: cheese
+      task: wensleydale
+  template:
+    metadata:
+      labels:
+        app: cheese
+        task: wensleydale
+    spec:
+      containers:
+      - name: cheese
+        image: cscashby/cheese:wensleydale
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: stilton
+spec:
+  ports:
+  - name: http
+    targetPort: 80
+    port: 80
+  selector:
+    app: cheese
+    task: stilton
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cheddar
+spec:
+  ports:
+  - name: http
+    targetPort: 80
+    port: 80
+  selector:
+    app: cheese
+    task: cheddar
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: wensleydale
+  annotations:
+    traefik.backend.circuitbreaker: "NetworkErrorRatio() > 0.5"
+spec:
+  ports:
+  - name: http
+    targetPort: 80
+    port: 80
+  selector:
+    app: cheese
+    task: wensleydale
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: cheese
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.frontend.rule.type: "PathPrefixStrip"
+spec:
+  rules:
+  - host: pi-kube1
+    http:
+      paths:
+      - path: /stilton
+        backend:
+          serviceName: stilton
+          servicePort: http
+  - host: pi-kube1
+    http:
+      paths:
+      - path: /cheddar
+        backend:
+          serviceName: cheddar
+          servicePort: http
+  - host: pi-kube1
+    http:
+      paths:
+      - path: /wensleydale
+        backend:
+          serviceName: wensleydale
+          servicePort: http
+

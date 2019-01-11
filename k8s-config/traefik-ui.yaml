@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: traefik-web-ui
+  namespace: kube-system
+spec:
+  selector:
+    k8s-app: traefik-ingress-lb
+  ports:
+  - name: web
+    port: 80
+    targetPort: 8080
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: traefik-web-ui
+  namespace: kube-system
+  annotations:
+    traefik.frontend.rule.type: PathPrefixStrip
+spec:
+  rules:
+  - host: pi-kube1
+    http:
+      paths:
+      - path: /admin
+        backend:
+          serviceName: traefik-web-ui
+          servicePort: web
+
