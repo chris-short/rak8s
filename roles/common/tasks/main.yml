@@ -19,6 +19,18 @@
     name: UTC
   register: timezone
 
+- name: gpu mem check
+  shell: cat /boot/config.txt | grep gpu_mem
+  changed_when: false
+  register: gpu_mem_check
+
+- name: reduce gpu memory
+  lineinfile:
+    path: /boot/config.txt
+    line: gpu_mem=16
+  register: gpu_mem
+  when: gpu_mem_check.stdout == ""
+
 - name: Enabling cgroup options at boot
   copy:
     src: cmdline.txt

@@ -4,6 +4,7 @@
 # https://gist.github.com/alexellis/fdbc90de7691a1b9edb545c17da2d975
 - name: Disable Swap
   shell: dphys-swapfile swapoff && dphys-swapfile uninstall && update-rc.d dphys-swapfile remove
+  ignore_errors: True
 
 # Docker Convenience Script Can Only Be Run Once
 - name: Determine if docker is installed
@@ -18,6 +19,12 @@
     APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE: 1
   script: "files/get-docker.sh {{ docker_ce_version }}"
   when: docker_there.stat.exists == False
+  register: docker_installed
+
+- name: Lock docker version to {{ docker_ce_version}}
+  command: /usr/bin/apt-mark hold docker-ce
+  when: docker_installed.changed
+
 
 - name: Pass bridged IPv4 traffic to iptables' chains
   sysctl:
