@@ -25,7 +25,6 @@
   command: /usr/bin/apt-mark hold docker-ce
   when: docker_installed.changed
 
-
 - name: Pass bridged IPv4 traffic to iptables' chains
   sysctl:
     name: net.bridge.bridge-nf-call-iptables
