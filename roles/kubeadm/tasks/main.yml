@@ -15,6 +15,8 @@
 
 # https://docs.docker.com/engine/installation/linux/docker-ce/debian/#install-using-the-convenience-script
 - name: Run Docker {{ docker_ce_version }} Install Script
+  environment:
+    APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE: 1
   script: "files/get-docker.sh {{ docker_ce_version }}"
   when: docker_there.stat.exists == False
   register: docker_installed
@@ -22,7 +24,6 @@
 - name: Lock docker version to {{ docker_ce_version}}
   command: /usr/bin/apt-mark hold docker-ce
   when: docker_installed.changed
-
 
 - name: Pass bridged IPv4 traffic to iptables' chains
   sysctl:
@@ -48,12 +49,6 @@
     owner: root
     group: root
     mode: 0644
-
-- name: apt-get update
-  apt:
-    update_cache: yes
-    autoclean: yes
-    autoremove: yes
 
 - name: Install k8s {{ kubernetes_package_version }} Y'all
   apt:
