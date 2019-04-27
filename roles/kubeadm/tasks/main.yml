@@ -52,10 +52,9 @@
 
 - name: Install k8s {{ kubernetes_package_version }} Y'all
   apt:
-    name: "{{ item }}={{ kubernetes_package_version }}"
+    pkg:
+      - kubelet
+      - kubeadm
+      - kubectl
     state: present
     force: yes
-  with_items:
-    - kubelet
-    - kubeadm
-    - kubectl
