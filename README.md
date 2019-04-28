@@ -39,7 +39,6 @@ Also, it's cheaper than a year of GKE. Plus, why not run Kubernetes in your home
 
 ## Recommendations
 
-* Since Raspbian Lite is being used it's recommended that the video memory of the Raspberry Pi 3s be set to its lowest setting (16 MB).
 * Setup SSH key pairs so your password is not required every time Ansible runs
 
 # Stand Up Your Kubernetes Cluster
@@ -61,7 +60,7 @@ If your SSH user on the Raspberry Pis are not the Raspbian default `pi` user mod
 ```
 ansible -m ping all
 ```
-
+This may fail to ping if you have not setup SSH keys and only configured your Pi's with passwords
 ## Deploy, Deploy, Deploy
 
 ```
@@ -100,6 +99,25 @@ kubectl proxy
 
 Then open a web browser and navigate to:
 [http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/](http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/)
+
+# Need to Start Over?
+
+Did something go wrong? Nodes fail some process or not joined to the cluster? Break Docker Versions with apt-update? 
+
+Try the process again from the beginning:
+
+```
+ansible-playbook cleanup.yml
+```
+Wait for everything to run and then start again with:
+
+```
+ansible-playbook cluster.yml
+```
+
+# Where to Get Help
+
+If you run into any problems please join our welcoming [Discourse](https://discourse.rak8s.io/) community. If you find a bug please open an issue and pull requests are always welcome.
 
 # Etymology
 

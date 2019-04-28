@@ -1,0 +1,3 @@
+- hosts: master
+  roles:
+    - dashboard

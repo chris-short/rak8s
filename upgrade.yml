@@ -1,0 +1,57 @@
+- hosts: master
+  tasks:
+    - name: apt-get update
+      apt:
+        update_cache: yes
+        autoclean: yes
+        autoremove: yes
+
+    - name: Upgrade kubeadm
+      apt:
+        name: "{{ item }}"
+        state: latest
+      with_items:
+        - kubeadm
+
+    - name: Determine latest stable version of Kubernetes
+      shell: curl -sSL https://dl.k8s.io/release/stable.txt
+      register: stable_ver
+
+    - name: Upgrade cluster with kubeadm
+      shell: "kubeadm upgrade apply -y {{ stable_ver.stdout }}"
+      async: 300
+      poll: 5
+
+    - name: Cordon Hosts
+      shell: "kubectl cordon {{ item }}"
+      with_items:
+        - "{{ groups['all'] }}"
+      tags: cordon
+
+    - name: Drain Hosts
+      shell: "kubectl drain {{ item }} --ignore-daemonsets"
+      with_items:
+        - "{{ groups['all'] }}"
+      ignore_errors: yes
+      tags: drain
+
+- hosts: all
+  tasks:
+    - name: Upgrade Y'all
+      apt:
+        name: "{{ item }}"
+        state: latest
+      with_items:
+        - kubelet
+        - kubectl
+      tags:
+        - kubelet
+        - kubectl
+
+- hosts: master
+  tasks:
+    - name: Uncordon Hosts
+      shell: "kubectl uncordon {{ item }}"
+      with_items:
+        - "{{ groups['all'] }}"
+      tags: uncordon
