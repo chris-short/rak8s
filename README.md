@@ -149,3 +149,7 @@ A very special thanks to [**Alex Ellis**](https://www.alexellis.io/) and the [Op
 * [DevOps'ish 060: WTF Google, SRE in a Serverless World, DevOps Requires Rethinking Norms, Kubernetes...](https://devopsish.com/060/)
 * [071: Susan Fowler, Open Offices, Tech Debt, Cloud Native Serverless, Kubernetes, and More](https://devopsish.com/071/)
 * [073: DevOps Hiring Guide, RIP RTFM, BGP & DNS, Kubernetes, GitLab, and More](https://devopsish.com/073/)
+* [nullendpoint.com | Building A Kubernetes Raspberry Pi3 Cluster With Rak8s And Ansible](http://nullendpoint.com/coding/2019/03/21/building-a-kubernetes-raspberry-pi3-cluster-with-rak8s-and-ansible/)
+* [WOA Issue 37 - Armv8 Collaboration](https://www.worksonarm.com/blog/woa-issue-37/)
+* [7 Raspberry Pi projects to explore | Opensource.com](https://opensource.com/article/19/3/raspberry-pi-projects)
+* [Running a Raspberry Pi cluster, a few months after - Alexandre Chaintreuil](http://achntrl.com/2018/11/05/running-a-kubernetes-cluster/)
