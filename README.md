@@ -1,8 +1,10 @@
-# rak8s (pronounced rackets - /ˈrækɪts/)
+# rak8s
+
+(pronounced rackets - /ˈrækɪts/)
 
 Stand up a Raspberry Pi based Kubernetes cluster with Ansible
 
-<iframe src="https://ghbtns.com/github-btn.html?user=rak8s&repo=rak8s&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe> <iframe src="https://ghbtns.com/github-btn.html?user=chris-short&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+![rak8s stars](https://ghbtns.com/github-btn.html?user=rak8s&repo=rak8s&type=star&count=true&size=large) [Follow Chris Short on GitHub]("https://ghbtns.com/github-btn.html?user=chris-short&type=follow&count=true&size=large")
 
 ## Why?
 
@@ -14,15 +16,15 @@ ARM is going to be the datacenter and home computing platform of the future. It 
 
 Also, it's cheaper than a year of GKE. Plus, why not run Kubernetes in your home?
 
-# Prerequisites
+## Prerequisites
 
-## Hardware
+### Hardware
 
 * Raspberry Pi 3 (3 or more)
 * Class 10 SD Cards
 * Network connection (wireless or wired) with access to the internet
 
-## Software
+### Software
 
 * [Raspbian Lite](https://www.raspberrypi.org/downloads/raspbian/) (installed on each Raspberry Pi)
 
@@ -39,49 +41,51 @@ Also, it's cheaper than a year of GKE. Plus, why not run Kubernetes in your home
     * If you are going to login to one of the Raspberry Pis to interact with the cluster `kubectl` is installed and configured by default on the master Kubernetes master.
     * If you are administering the cluster from a remote machine (your laptop, desktop, server, bastion host, etc.) `kubectl` will not be installed on the remote machine but it will be configured to interact with the newly built cluster once `kubectl` is installed.
 
-## Recommendations
+### Recommendations
 
 * Setup SSH key pairs so your password is not required every time Ansible runs
 
-# Stand Up Your Kubernetes Cluster
+## Stand Up Your Kubernetes Cluster
 
-## Download the latest release or clone the repo:
+### Download the latest release or clone the repo:
 
-```
+``` bash
 git clone https://github.com/rak8s/rak8s.git
 ```
 
-## Modify ansible.cfg and inventory
+### Modify ansible.cfg and inventory
 
 Modify the `inventory` file to suit your environment. Change the names to your liking and the IPs to the addresses of your Raspberry Pis.
 
 If your SSH user on the Raspberry Pis are not the Raspbian default `pi` user modify `remote_user` in the `ansible.cfg`.
 
-## Confirm Ansible is working with your Raspberry Pis:
+### Confirm Ansible is working with your Raspberry Pis:
 
-```
+``` bash
 ansible -m ping all
 ```
+
 This may fail to ping if you have not setup SSH keys and only configured your Pi's with passwords
+
 ## Deploy, Deploy, Deploy
 
-```
+``` bash
 ansible-playbook cluster.yml
 ```
 
-# Interact with Kubernetes
+## Interact with Kubernetes
 
-## CLI
+### CLI
 
 Test your Kubernetes cluster is up and running:
 
-```
+``` bash
 kubectl get nodes
 ```
 
 The output should look something like this:
 
-```
+``` bash
 NAME       STATUS    ROLES     AGE       VERSION
 pik8s000   Ready     master    2d        v1.9.1
 pik8s001   Ready     <none>    2d        v1.9.1
@@ -95,39 +99,40 @@ pik8s004   Ready     <none>    2d        v1.9.1
 
 rak8s installs the non-HTTPS version of the Kubernetes dashboard. This is not recommended for production clusters but, it simplifies the setup. Access the dashboard by running:
 
-```
+``` bash
 kubectl proxy
 ```
 
 Then open a web browser and navigate to:
 [http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/](http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/)
 
-# Need to Start Over?
+## Need to Start Over?
 
-Did something go wrong? Nodes fail some process or not joined to the cluster? Break Docker Versions with apt-update? 
+Did something go wrong? Nodes fail some process or not joined to the cluster? Break Docker Versions with apt-update?
 
 Try the process again from the beginning:
 
-```
+``` bash
 ansible-playbook cleanup.yml
 ```
+
 Wait for everything to run and then start again with:
 
-```
+```bash
 ansible-playbook cluster.yml
 ```
 
-# Where to Get Help
+## Where to Get Help
 
 If you run into any problems please join our welcoming [Discourse](https://discourse.rak8s.io/) community. If you find a bug please open an issue and pull requests are always welcome.
 
-# Etymology
+## Etymology
 
 **rak8s** (pronounced rackets - /ˈrækɪts/)
 
 Coined by [Kendrick Coleman](https://github.com/kacole2) on [13 Jan 2018](https://twitter.com/KendrickColeman/status/952242602690129921)
 
-# References & Credits
+## References & Credits
 
 These playbooks were assembled using a handful of very helpful guides:
 
@@ -137,3 +142,10 @@ These playbooks were assembled using a handful of very helpful guides:
 * [Install using the convenience script](https://docs.docker.com/engine/installation/linux/docker-ce/debian/#install-using-the-convenience-script)
 
 A very special thanks to [**Alex Ellis**](https://www.alexellis.io/) and the [OpenFaaS](https://www.openfaas.com/) community for their assitance in answering questions and making sense of some errors.
+
+## Media Coverage
+
+* [Raspberry Pi Kubernetes Cluster - chrisshort.net](https://chrisshort.net/raspberry-pi-kubernetes-cluster/)
+* [DevOps'ish 060: WTF Google, SRE in a Serverless World, DevOps Requires Rethinking Norms, Kubernetes...](https://devopsish.com/060/)
+* [071: Susan Fowler, Open Offices, Tech Debt, Cloud Native Serverless, Kubernetes, and More](https://devopsish.com/071/)
+* [073: DevOps Hiring Guide, RIP RTFM, BGP & DNS, Kubernetes, GitLab, and More](https://devopsish.com/073/)
