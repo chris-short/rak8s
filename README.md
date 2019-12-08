@@ -33,7 +33,8 @@ Also, it's cheaper than a year of GKE. Plus, why not run Kubernetes in your home
     * You can set these via OS configuration or DHCP reservations (your choice)
 
 * Ability to SSH into all Raspberry Pis and escalate privileges with sudo
-    * The pi user is fine just change its password
+    * The pi user is fine
+    * Please change the pi user's password
 
 * [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) 2.2 or higher
 
