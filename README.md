@@ -4,7 +4,7 @@
 
 Stand up a Raspberry Pi based Kubernetes cluster with Ansible
 
-<https://github.com/rak8s/> is maintained by [Chris Short](https://github.com/chris-short)
+[**rak8s**](https://github.com/rak8s) is maintained by [Chris Short](https://github.com/chris-short) and a community of open source folks will to help.
 
 ## Why?
 
@@ -35,7 +35,7 @@ Also, it's cheaper than a year of GKE. Plus, why not run Kubernetes in your home
 * Ability to SSH into all Raspberry Pis and escalate privileges with sudo
     * The pi user is fine just change its password
 
-* [Ansible](http://docs.ansible.com/ansible/latest/intro_installation.html) 2.2 or higher
+* [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) 2.2 or higher
 
 * [`kubectl`](https://kubernetes.io/docs/tasks/tools/install-kubectl/) should be available on the system you intend to use to interact with the Kubernetes cluster.
     * If you are going to login to one of the Raspberry Pis to interact with the cluster `kubectl` is installed and configured by default on the master Kubernetes master.
@@ -128,7 +128,7 @@ If you run into any problems please join our welcoming [Discourse](https://disco
 
 ## Etymology
 
-**rak8s** (pronounced rackets - /ˈrækɪts/)
+[**rak8s**](https://rak8s.io) (pronounced rackets - /ˈrækɪts/)
 
 Coined by [Kendrick Coleman](https://github.com/kacole2) on [13 Jan 2018](https://twitter.com/KendrickColeman/status/952242602690129921)
 
