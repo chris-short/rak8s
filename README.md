@@ -4,7 +4,7 @@
 
 Stand up a Raspberry Pi based Kubernetes cluster with Ansible
 
-![rak8s stars](https://ghbtns.com/github-btn.html?user=rak8s&repo=rak8s&type=star&count=true&size=large) [Follow Chris Short on GitHub]("https://ghbtns.com/github-btn.html?user=chris-short&type=follow&count=true&size=large")
+<https://github.com/rak8s/> is maintained by [Chris Short](https://github.com/chris-short)
 
 ## Why?
 
