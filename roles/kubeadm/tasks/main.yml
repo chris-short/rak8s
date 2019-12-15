@@ -49,6 +49,12 @@
     owner: root
     group: root
     mode: 0644
+    
+- name: apt-get update
+  apt:
+    update_cache: yes
+    autoclean: yes
+    autoremove: yes
 
 - name: Install k8s {{ kubernetes_package_version }} Y'all
   apt:
