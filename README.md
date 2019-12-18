@@ -4,7 +4,7 @@
 
 Stand up a Raspberry Pi based Kubernetes cluster with Ansible
 
-[**rak8s**](https://github.com/rak8s) is maintained by [Chris Short](https://github.com/chris-short) and a community of open source folks will to help.
+[**rak8s**](https://github.com/rak8s) is maintained by [Chris Short](https://github.com/chris-short) and a community of open source folks willing to help.
 
 ## Why?
 
