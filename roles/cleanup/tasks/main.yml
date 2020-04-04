@@ -30,7 +30,7 @@
     - /var/log/pods
     - /var/log/containers
     - /var/lib/kubelet
-
+    - /var/lib/etcd
 
 - name: Reboot
   reboot:
