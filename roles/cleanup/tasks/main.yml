@@ -20,10 +20,6 @@
     autoremove: yes
     force: yes
 
-- name: Reboot
-  reboot:
-    reboot_timeout: 120
-
 - name: "Remove pod logging"
   file:
     path: "{{ item }}"
@@ -31,3 +27,7 @@
   become: True
   loop:
     - /var/log/pods
+
+- name: Reboot
+  reboot:
+    reboot_timeout: 120
