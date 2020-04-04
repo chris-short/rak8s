@@ -26,8 +26,6 @@
     state: absent
   become: True
   loop:
-    - /etc/kubernetes
-    - /var/lib/kubelet
     - /var/lib/etcd
     - /var/log/pods
     - /var/log/containers
