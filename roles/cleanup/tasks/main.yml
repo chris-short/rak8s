@@ -27,10 +27,10 @@
   become: True
   loop:
     - /etc/kubernetes
-    - /var/log/pods
-    - /var/log/containers
     - /var/lib/kubelet
     - /var/lib/etcd
+    - /var/log/pods
+    - /var/log/containers
 
 - name: Reboot
   reboot:
