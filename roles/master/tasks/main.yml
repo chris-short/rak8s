@@ -35,7 +35,9 @@
 
 - name: Install Flannel (Networking)
   shell: "curl -sSL https://rawgit.com/coreos/flannel/{{ flannel_version }}/Documentation/kube-flannel.yml | kubectl create -f -" 
-  warn: false
+  args:
+    warn: false
+
 
 - name: Poke kubelet
   systemd:
