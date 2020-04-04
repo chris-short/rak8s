@@ -22,9 +22,15 @@
 
 - name: "Remove pod logging"
   file:
-    path: /var/log/pods
+    path: "{{ item }}"
     state: absent
   become: True
+  loop:
+    - /etc/kubernetes
+    - /var/log/pods
+    - /var/log/containers
+    - /var/lib/kubelet
+
 
 - name: Reboot
   reboot:
