@@ -48,10 +48,7 @@
     autoclean: yes
     autoremove: yes
     cache_valid_time: 86400
-
-- name: apt-get upgrade
-  apt:
-    upgrade: full
+    upgrade: yes
 
 - name: python-apt dependency
   apt:
