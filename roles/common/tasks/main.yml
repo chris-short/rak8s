@@ -54,22 +54,10 @@
     upgrade: full
 
 - name: python-apt dependency
-  shell: apt-get install -y python-apt
-  args:
-    warn: no
+  apt:
+    name: ['python-apt']
+    state: present
 
 - name: Reboot
-  shell: sleep 2 && shutdown -r now "Ansible Reboot"
-  async: 1
-  poll: 0
-  ignore_errors: True
-  when: cmdline or timezone or hostname is changed
-
-- name: Wait for Reboot
-  local_action: wait_for
-  args:
-    host: "{{ inventory_hostname }}"
-    port: 22
-    delay: 15
-    timeout: 120
-  become: False
+  reboot:
+    reboot_timeout: 120

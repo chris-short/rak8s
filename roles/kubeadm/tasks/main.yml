@@ -38,9 +38,9 @@
     state: latest
 
 - name: Add Google Cloud Repo Key
-  shell: curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
-  args:
-    warn: no
+  apt_key:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    state: present
 
 - name: Add Kubernetes to Available apt Sources
   template:
@@ -58,10 +58,6 @@
 
 - name: Install k8s {{ kubernetes_package_version }} Y'all
   apt:
-    name: "{{ item }}={{ kubernetes_package_version }}"
+    name: "['kubelet={{ kubernetes_package_version }}', 'kubeadm={{ kubernetes_package_version }}','kubectl={{ kubernetes_package_version }}']"
     state: present
     force: yes
-  with_items:
-    - kubelet
-    - kubeadm
-    - kubectl
