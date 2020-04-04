@@ -19,7 +19,7 @@
 
     - name: Upgrade cluster with kubeadm
       shell: "kubeadm upgrade apply -y {{ stable_ver.stdout }}"
-      async: 300
+      async: 600
       poll: 5
 
     - name: Cordon Hosts
