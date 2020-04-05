@@ -58,4 +58,4 @@
 - name: Reboot
   reboot:
     reboot_timeout: 120
-  when: cmdline or timezone or hostname is changed
+  when: cmdline.changed or timezone.changed or hostname.changed
