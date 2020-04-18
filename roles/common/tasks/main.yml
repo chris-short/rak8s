@@ -42,6 +42,14 @@
   tags:
     - boot
 
+# Doc: http://manpages.ubuntu.com/manpages/trusty/man8/dphys-swapfile.8.html
+- name: Disable Swap
+  lineinfile:
+    path: /etc/dphys-swapfile
+    regexp: '^CONF_SWAPSIZE='
+    line: CONF_SWAPSIZE=0
+  register: swap
+
 - name: apt-get update
   apt:
     update_cache: yes
@@ -58,4 +66,4 @@
 - name: Reboot
   reboot:
     reboot_timeout: 120
-  when: cmdline.changed or timezone.changed or hostname.changed
+  when: cmdline.changed or timezone.changed or hostname.changed or swap.changed

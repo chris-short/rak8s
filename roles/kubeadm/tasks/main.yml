@@ -1,11 +1,6 @@
 ---
 # tasks file for kubeadm
 
-# https://gist.github.com/alexellis/fdbc90de7691a1b9edb545c17da2d975
-- name: Disable Swap
-  shell: dphys-swapfile swapoff && dphys-swapfile uninstall && update-rc.d dphys-swapfile remove
-  ignore_errors: True
-
 # Docker Convenience Script Can Only Be Run Once
 - name: Determine if docker is installed
   stat:
@@ -49,7 +44,7 @@
     owner: root
     group: root
     mode: 0644
-    
+
 - name: apt-get update
   apt:
     update_cache: yes
