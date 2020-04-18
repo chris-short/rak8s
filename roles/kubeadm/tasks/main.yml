@@ -23,7 +23,7 @@
 - name: Pass bridged IPv4 traffic to iptables' chains
   sysctl:
     name: net.bridge.bridge-nf-call-iptables
-    value: 1
+    value: '1'
     state: present
 
 # https://kubernetes.io/docs/setup/independent/install-kubeadm/
