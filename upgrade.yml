@@ -1,15 +1,13 @@
 - hosts: master
   tasks:
-    - name: apt-get update
-      apt:
-        update_cache: yes
-        autoclean: yes
-        autoremove: yes
-
     - name: Upgrade kubeadm
       apt:
         name: ['kubeadm']
         state: latest
+        force: yes
+        update_cache: yes
+        autoclean: yes
+        autoremove: yes
 
     - name: Determine latest stable version of Kubernetes
       shell: curl -sSL https://dl.k8s.io/release/stable.txt
@@ -41,6 +39,10 @@
       apt:
         name: ['kubelet', 'kubectl']
         state: latest
+        force: yes
+        update_cache: yes
+        autoclean: yes
+        autoremove: yes
       tags:
         - kubelet
         - kubectl
