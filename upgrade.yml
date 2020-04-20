@@ -1,25 +1,23 @@
 - hosts: master
   tasks:
-    - name: apt-get update
+    - name: Upgrade kubeadm
       apt:
+        name: ['kubeadm']
+        state: latest
+        force: yes
         update_cache: yes
         autoclean: yes
         autoremove: yes
 
-    - name: Upgrade kubeadm
-      apt:
-        name: "{{ item }}"
-        state: latest
-      with_items:
-        - kubeadm
-
     - name: Determine latest stable version of Kubernetes
       shell: curl -sSL https://dl.k8s.io/release/stable.txt
       register: stable_ver
+      args:
+        warn: False
 
     - name: Upgrade cluster with kubeadm
       shell: "kubeadm upgrade apply -y {{ stable_ver.stdout }}"
-      async: 300
+      async: 600
       poll: 5
 
     - name: Cordon Hosts
@@ -39,11 +37,12 @@
   tasks:
     - name: Upgrade Y'all
       apt:
-        name: "{{ item }}"
+        name: ['kubelet', 'kubectl']
         state: latest
-      with_items:
-        - kubelet
-        - kubectl
+        force: yes
+        update_cache: yes
+        autoclean: yes
+        autoremove: yes
       tags:
         - kubelet
         - kubectl

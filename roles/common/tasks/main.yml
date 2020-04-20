@@ -42,34 +42,28 @@
   tags:
     - boot
 
+# Doc: http://manpages.ubuntu.com/manpages/trusty/man8/dphys-swapfile.8.html
+- name: Disable Swap
+  lineinfile:
+    path: /etc/dphys-swapfile
+    regexp: '^CONF_SWAPSIZE='
+    line: CONF_SWAPSIZE=0
+  register: swap
+
 - name: apt-get update
   apt:
-    update_cache: yes
-    autoclean: yes
-    autoremove: yes
+    update_cache: 'yes'
+    autoclean: 'yes'
+    autoremove: 'yes'
     cache_valid_time: 86400
-
-- name: apt-get upgrade
-  apt:
-    upgrade: full
+    upgrade: 'yes'
 
 - name: python-apt dependency
-  shell: apt-get install -y python-apt
-  args:
-    warn: no
+  apt:
+    name: ['python-apt']
+    state: present
 
 - name: Reboot
-  shell: sleep 2 && shutdown -r now "Ansible Reboot"
-  async: 1
-  poll: 0
-  ignore_errors: True
-  when: cmdline or timezone or hostname is changed
-
-- name: Wait for Reboot
-  local_action: wait_for
-  args:
-    host: "{{ inventory_hostname }}"
-    port: 22
-    delay: 15
-    timeout: 120
-  become: False
+  reboot:
+    reboot_timeout: 120
+  when: cmdline.changed or timezone.changed or hostname.changed or swap.changed

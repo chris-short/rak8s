@@ -14,33 +14,20 @@
 
 - name: "apt-get purge packages"
   apt:
-    name: "{{ item }}"
+    name: ['kubelet', 'kubeadm', 'kubectl', 'docker-ce']
     state: absent
     purge: yes
     autoremove: yes
     force: yes
-  with_items:
-    - kubelet
-    - kubeadm
-    - kubectl
-    - docker-ce
 
 - name: "Remove pod logging"
-  shell: rm -rf /var/log/pods/* 
+  file:
+    path: "{{ item }}"
+    state: absent
   become: True
+  loop:
+    - /var/log/pods
 
 - name: Reboot
-  shell: sleep 2 && shutdown -r now "Ansible Reboot"
-  async: 1
-  poll: 0
-  ignore_errors: True
-
-- name: Wait for Reboot
-  local_action: wait_for
-  args:
-    host: "{{ inventory_hostname }}"
-    port: 22
-    delay: 15
-    timeout: 120
-  become: False
-
+  reboot:
+    reboot_timeout: 120

@@ -1,11 +1,6 @@
 ---
 # tasks file for kubeadm
 
-# https://gist.github.com/alexellis/fdbc90de7691a1b9edb545c17da2d975
-- name: Disable Swap
-  shell: dphys-swapfile swapoff && dphys-swapfile uninstall && update-rc.d dphys-swapfile remove
-  ignore_errors: True
-
 # Docker Convenience Script Can Only Be Run Once
 - name: Determine if docker is installed
   stat:
@@ -21,14 +16,14 @@
   when: docker_there.stat.exists == False
   register: docker_installed
 
-- name: Lock docker version to {{ docker_ce_version}}
+- name: Lock docker version to {{ docker_ce_version }}
   command: /usr/bin/apt-mark hold docker-ce
   when: docker_installed.changed
 
 - name: Pass bridged IPv4 traffic to iptables' chains
   sysctl:
     name: net.bridge.bridge-nf-call-iptables
-    value: 1
+    value: '1'
     state: present
 
 # https://kubernetes.io/docs/setup/independent/install-kubeadm/
@@ -38,9 +33,9 @@
     state: latest
 
 - name: Add Google Cloud Repo Key
-  shell: curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
-  args:
-    warn: no
+  apt_key:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    state: present
 
 - name: Add Kubernetes to Available apt Sources
   template:
@@ -49,7 +44,7 @@
     owner: root
     group: root
     mode: 0644
-    
+
 - name: apt-get update
   apt:
     update_cache: yes
@@ -58,10 +53,15 @@
 
 - name: Install k8s {{ kubernetes_package_version }} Y'all
   apt:
-    name: "{{ item }}={{ kubernetes_package_version }}"
+    name: "['kubelet={{ kubernetes_package_version }}', 'kubeadm={{ kubernetes_package_version }}','kubectl={{ kubernetes_package_version }}']"
     state: present
     force: yes
-  with_items:
-    - kubelet
-    - kubeadm
-    - kubectl
+  register: kubernetes_installed
+
+- name: Lock Kubernetes version to {{ kubernetes_package_version }}
+  command: "/usr/bin/apt-mark hold {{ item }}"
+  when: kubernetes_installed.changed
+  loop:
+  - kubelet
+  - kubeadm
+  - kubectl

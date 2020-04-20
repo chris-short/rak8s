@@ -26,7 +26,7 @@
     mode: 0755
     remote_src: yes
     backup: yes
-  when: kubeadm_init
+  when: kubeadm_init is succeeded
 
 - name: Join Kubernetes Cluster
   shell: kubeadm join --ignore-preflight-errors=all --token {{ token }} {{ groups['master'][0] }}:6443 --discovery-token-unsafe-skip-ca-verification
@@ -34,7 +34,9 @@
   register: kubeadm_join
 
 - name: Install Flannel (Networking)
-  shell: "curl -sSL https://rawgit.com/coreos/flannel/{{ flannel_version }}/Documentation/kube-flannel.yml | kubectl create -f -" 
+  shell: "curl -sSL https://rawgit.com/coreos/flannel/{{ flannel_version }}/Documentation/kube-flannel.yml | kubectl create -f -"
+  args:
+    warn: false
 
 - name: Poke kubelet
   systemd:
