@@ -74,6 +74,13 @@ This may fail to ping if you have not setup SSH keys and only configured your Pi
 ansible-playbook cluster.yml
 ```
 
+## Shutdown
+
+```bash
+ansible-playbook shutdown.yml
+```
+
+
 ## Interact with Kubernetes
 
 ### CLI
