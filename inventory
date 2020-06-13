@@ -1,13 +1,13 @@
-[dev]
-rak8s000    ansible_host=192.168.86.200
-rak8s001    ansible_host=192.168.86.201
-rak8s002    ansible_host=192.168.86.202
-
-[prod]
-rak8s003    ansible_host=192.168.86.203
-rak8s004    ansible_host=192.168.86.204
-rak8s005    ansible_host=192.168.86.205
-
-[master]
-rak8s000
-rak8s003
+---
+all:
+  hosts:
+    node-1:
+      ansible_host: 192.168.86.39
+    node-2:
+      ansible_host: 192.168.86.45
+    node-3:
+      ansible_host: 192.168.86.47
+master:
+  hosts:
+    node-0:
+      ansible_host: 192.168.86.32
