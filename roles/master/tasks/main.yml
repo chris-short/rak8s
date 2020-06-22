@@ -34,7 +34,7 @@
   register: kubeadm_join
 
 - name: Install Flannel (Networking)
-  shell: "curl -sSL https://rawgit.com/coreos/flannel/{{ flannel_version }}/Documentation/kube-flannel.yml | kubectl create -f -"
+  shell: "kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml"
   args:
     warn: false
 
