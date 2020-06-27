@@ -130,6 +130,8 @@ Wait for everything to run and then start again with:
 ansible-playbook cluster.yml
 ```
 
+Make sure to remove .cache if your ip addresses change.
+
 ## Where to Get Help
 
 If you run into any problems please join our welcoming [Discourse](https://discourse.rak8s.io/) community. If you find a bug please open an issue and pull requests are always welcome.

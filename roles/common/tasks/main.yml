@@ -42,17 +42,22 @@
   tags:
     - boot
 
+# - name: Create a directory if it does not exist
+#   file:
+#     path: /etc/docker
+#     state: directory
+#     mode: '0755'
 
-- name: Setting docker daemon.json
-  copy:
-    src: daemon.json
-    dest: /etc/docker/daemon.json
-    owner: root
-    group: root
-    mode: 0755
-  register: dockerdaemon
-  tags:
-    - dockerdaemon
+# - name: Setting docker daemon.json
+#   copy:
+#     src: daemon.json
+#     dest: /etc/docker/daemon.json
+#     owner: root
+#     group: root
+#     mode: 0755
+#   register: dockerdaemon
+#   tags:
+#     - dockerdaemon
 
 # Doc: http://manpages.ubuntu.com/manpages/trusty/man8/dphys-swapfile.8.html
 - name: Disable Swap
@@ -78,4 +83,4 @@
 - name: Reboot
   reboot:
     reboot_timeout: 120
-  when: dockerdaemon.changed or cmdline.changed or timezone.changed or hostname.changed or swap.changed
+  when: cmdline.changed or timezone.changed or hostname.changed or swap.changed

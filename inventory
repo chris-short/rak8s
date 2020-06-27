@@ -2,12 +2,12 @@
 all:
   hosts:
     node-1:
-      ansible_host: 192.168.86.39
+      ansible_host: 192.168.86.71
     node-2:
-      ansible_host: 192.168.86.45
+      ansible_host: 192.168.86.72
     node-3:
-      ansible_host: 192.168.86.47
+      ansible_host: 192.168.86.73
 master:
   hosts:
     node-0:
-      ansible_host: 192.168.86.32
+      ansible_host: 192.168.86.70
